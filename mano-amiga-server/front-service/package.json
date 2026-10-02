@@ -1,0 +1,22 @@
+{
+  "name": "mano-amiga-front-service",
+  "version": "0.1.0",
+  "description": "Puerta de entrada en la DMZ: HTTPS, cabeceras de seguridad, rate limit y reenvío a la API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.3",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "http-proxy-middleware": "^4.2.0"
+  },
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  }
+}

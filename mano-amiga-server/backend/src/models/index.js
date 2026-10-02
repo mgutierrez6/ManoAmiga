@@ -1,0 +1,12 @@
+module.exports = {
+  Usuario: require('./Usuario.model'),
+  Organizacion: require('./Organizacion.model'),
+  Etiqueta: require('./Etiqueta.model'),
+  Actividad: require('./Actividad.model'),
+  Inscripcion: require('./Inscripcion.model'),
+  Asistencia: require('./Asistencia.model'),
+  Campana: require('./Campana.model'),
+  Publicacion: require('./Publicacion.model'),
+  Sesion: require('./Sesion.model'),
+  Auditoria: require('./Auditoria.model'),
+};

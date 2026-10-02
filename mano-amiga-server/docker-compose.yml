@@ -1,0 +1,55 @@
+# Despliegue en el servidor (EC2) · sección 7 del informe.
+#  - front: único servicio con puertos publicados (443 y 80) -> DMZ
+#  - api y mongo: SIN puertos publicados; solo accesibles por las redes internas de Docker (FW 2)
+# Levantar:   docker compose up -d --build
+services:
+  front:
+    build: ./front-service
+    restart: unless-stopped
+    ports: ["443:443", "80:80"]
+    environment:
+      API_INTERNAL_URL: http://api:3000
+      TLS_CERT_PATH: /certs/live/${DOMINIO}/fullchain.pem
+      TLS_KEY_PATH: /certs/live/${DOMINIO}/privkey.pem
+      RATE_LIMIT_POR_MINUTO: ${RATE_LIMIT_POR_MINUTO:-100}
+    volumes:
+      - /etc/letsencrypt:/certs:ro
+    networks: [dmz_net, secure_net]
+    depends_on: [api]
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    # Solo las variables que la API necesita (la contraseña root de Mongo NO llega a este contenedor).
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOST: 0.0.0.0
+      MONGO_URI: mongodb://${MONGO_APP_USER}:${MONGO_APP_PASSWORD}@mongo:27017/mano_amiga?authSource=mano_amiga
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      QR_SECRET: ${QR_SECRET}
+      EXPO_ACCESS_TOKEN: ${EXPO_ACCESS_TOKEN:-}
+    networks: [secure_net, egress_net] # egress_net: salida a Expo Push
+    depends_on: [mongo]
+
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_APP_USER: ${MONGO_APP_USER}
+      MONGO_APP_PASSWORD: ${MONGO_APP_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d:ro # crea el usuario de mínimos privilegios
+    networks: [secure_net]
+
+networks:
+  dmz_net: {}
+  secure_net: { internal: true } # sin salida a Internet
+  egress_net: {}
+
+volumes:
+  mongo_data: {}

@@ -1,0 +1,24 @@
+# Dependencias
+node_modules/
+
+# Secretos: NUNCA subir el .env (solo el .env.example)
+.env
+.env.*
+!.env.example
+
+# Expo / React Native
+.expo/
+dist/
+web-build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+expo-env.d.ts
+
+# Varios
+npm-debug.log*
+.DS_Store
+coverage/
