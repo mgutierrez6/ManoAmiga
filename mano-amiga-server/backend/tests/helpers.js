@@ -22,7 +22,7 @@ async function conectar() {
     uri = memoria.getUri();
   }
   const base = `test_${crypto.randomBytes(4).toString('hex')}`;
-  await mongoose.connect(uri, { dbName: base });
+  await mongoose.connect(uri, { dbName: base, runtimeAdapters: { os: require('os') } });
   for (const m of Object.values(models)) {
     try {
       await m.syncIndexes();
