@@ -1,6 +1,7 @@
 package uy.edu.um.manoamiga.modelo;
 
 import java.time.Instant;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -25,7 +26,7 @@ public class Sesion {
     private boolean reemplazada = false;
     private String dispositivo;
     private Instant creadaEn;
-    @Indexed(name = "expiraEn_1", expireAfterSeconds = 0)
+    @Indexed(name = "expiraEn_1", expireAfter = "0s")
     private Instant expiraEn;
 
     public ObjectId getId() { return id; }

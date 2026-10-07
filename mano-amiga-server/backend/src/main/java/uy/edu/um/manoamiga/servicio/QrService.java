@@ -40,7 +40,7 @@ public class QrService {
                 .claim("act", actividadId)
                 .claim("typ", "qr")
                 .issuer(Configuracion.JWT_ISSUER)
-                .audience().single(AUDIENCIA_QR)
+                .audience().add(AUDIENCIA_QR).and()
                 .issuedAt(Date.from(ahora))
                 .expiration(Date.from(vence))
                 .signWith(clave, Jwts.SIG.HS256)
