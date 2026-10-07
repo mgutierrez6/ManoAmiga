@@ -1,0 +1,10 @@
+# Variante para la materia de Seguridad: la MISMA arquitectura (DMZ / red segura), pero con la API en Java.
+# Reemplaza solo el servicio "api"; el front-service, las redes y Mongo quedan iguales.
+#
+#   docker compose -f docker-compose.yml -f docker-compose.java.yml up -d --build
+#
+services:
+  api:
+    build: ./backend
+    # Techo de memoria del contenedor (la instancia gratuita de AWS tiene 1 GB). La JVM usa el 60 % (ver Dockerfile).
+    mem_limit: 600m

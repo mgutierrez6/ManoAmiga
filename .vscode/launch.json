@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "API Java (Mano Amiga)",
+      "request": "launch",
+      "mainClass": "uy.edu.um.manoamiga.ManoAmigaApplication",
+      "projectName": "mano-amiga-api",
+      "cwd": "${workspaceFolder}/mano-amiga-server/backend"
+    }
+  ]
+}
