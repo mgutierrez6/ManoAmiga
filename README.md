@@ -3,11 +3,7 @@
 Se necesitan **3 terminales**:
 
 1. **Backend**
-```bash
-   cd mano-amiga-server\backend
-   npm install   # solo la primera vez
-   npm start
-```
+Correr el archivo ManoAmiga Seg\mano-amiga-server\backend\src\main\java\uy\edu\um\manoamiga\ManoAmigaApplication.java
 
 2. **Front service**
 ```bash
