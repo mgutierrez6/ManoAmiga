@@ -7,7 +7,7 @@ module.exports = {
     version: '0.1.0',
     orientation: 'portrait',
     icon: './assets/icon.png',
-    userInterfaceStyle: 'light', // el modo oscuro se agrega en el Sprint 2 (R8)
+    userInterfaceStyle: 'automatic', // claro / oscuro según el sistema o la preferencia del perfil (Sprint 2)
     ios: {
       supportsTablet: false,
       bundleIdentifier: 'uy.edu.um.manoamiga',
@@ -28,6 +28,13 @@ module.exports = {
       '@react-native-community/datetimepicker',
       ['expo-camera', { cameraPermission: 'Mano Amiga usa la cámara para escanear el código QR de asistencia.', recordAudioAndroid: false }],
       'expo-notifications',
+      [
+        'expo-location',
+        {
+          // Solo "mientras se usa la app" y solo para centrar el mapa: la ubicación nunca se manda al servidor (RS7).
+          locationWhenInUsePermission: 'Mano Amiga usa tu ubicación solo para mostrarte actividades cerca tuyo en el mapa. No se guarda ni se envía.',
+        },
+      ],
     ],
     extra: {
       // Cuando configuren EAS (Sprint 2), acá queda el projectId que usan las notificaciones push:
