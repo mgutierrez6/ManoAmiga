@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-import { colores, espacio, fuentes } from '../constants/tema';
+import { colores, espacio, estilosDinamicos, fuentes } from '../constants/tema';
 import { fechaHora } from '../utils/formato';
 
 /**
@@ -47,7 +47,7 @@ export default function FechaHoraInput({ etiqueta, valor, onChange }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   campo: { marginBottom: espacio.m },
   etiqueta: { fontFamily: fuentes.negrita, fontSize: 13, color: colores.tintaSuave, marginBottom: 6, marginLeft: 4 },
   input: {
@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     paddingHorizontal: espacio.m,
     paddingVertical: 12,
-    backgroundColor: colores.blanco,
+    backgroundColor: colores.tarjeta,
   },
   icono: { fontSize: 18, marginRight: 8 },
   valor: { fontFamily: fuentes.textoMedio, fontSize: 16, color: colores.tinta },
-});
+}));

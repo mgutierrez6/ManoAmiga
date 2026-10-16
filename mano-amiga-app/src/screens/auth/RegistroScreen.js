@@ -5,7 +5,7 @@ import Hero from '../../components/Hero';
 import { Boton, Campo, MensajeError, Tarjeta, TextoSuave } from '../../components/ui';
 import { useAuth } from '../../hooks/useAuth';
 import { mensajeDeError } from '../../api/client';
-import { colores, fuentes } from '../../constants/tema';
+import { colores, estilosDinamicos, fuentes } from '../../constants/tema';
 
 // El registro crea SIEMPRE un voluntario (el rol lo decide la API, no la app).
 export default function RegistroScreen({ navigation }) {
@@ -56,6 +56,6 @@ export default function RegistroScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   volver: { fontFamily: fuentes.negrita, color: colores.blanco, fontSize: 15 },
-});
+}));

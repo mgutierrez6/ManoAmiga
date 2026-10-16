@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Easing, StyleSheet, View } from 'react-native';
 import Svg, { Circle, Path } from 'react-native-svg';
-import { colores } from '../constants/tema';
+import { colores, estilosDinamicos } from '../constants/tema';
 
 /*
  * Figuras decorativas propias (SVG): blobs orgánicos, anillos, puntos, garabatos y destellos.
@@ -169,5 +169,5 @@ export function FigurasEncabezado({ variante = 0 }) {
   );
 }
 
-const styles = StyleSheet.create({ abs: { position: 'absolute' } });
+const styles = estilosDinamicos(() => ({ abs: { position: 'absolute' } }));
 

@@ -1,5 +1,8 @@
 import Svg, { Circle, Ellipse, G, Path, Rect } from 'react-native-svg';
-import { colores } from '../constants/tema';
+import { paletas } from '../constants/tema';
+
+// Las ilustraciones usan siempre la paleta clara (son dibujos: no cambian con el tema).
+const colores = paletas.claro;
 
 /*
  * Ilustraciones propias hechas con formas simples (estilo "flat" tipo DrawKit).

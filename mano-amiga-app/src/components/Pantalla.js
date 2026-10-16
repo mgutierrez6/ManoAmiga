@@ -1,5 +1,5 @@
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native';
-import { colores, espacio } from '../constants/tema';
+import { colores, espacio, estilosDinamicos } from '../constants/tema';
 import { Blob, Flotante } from './Decoraciones';
 
 /**
@@ -37,10 +37,10 @@ export default function Pantalla({ children, scroll = true, estilo, decorada = t
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   flex: { flex: 1 },
   contenido: { flexGrow: 1, paddingBottom: espacio.xxl },
   cuerpo: { padding: espacio.l },
   blobArriba: { position: 'absolute', top: -60, right: -70 },
   blobAbajo: { position: 'absolute', bottom: -80, left: -80 },
-});
+}));

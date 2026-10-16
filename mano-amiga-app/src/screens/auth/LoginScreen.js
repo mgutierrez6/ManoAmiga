@@ -7,7 +7,7 @@ import { Anillo, Blob, Destello, Flotante, Girando, Puntos } from '../../compone
 import { IlustracionBienvenida } from '../../components/Ilustraciones';
 import { useAuth } from '../../hooks/useAuth';
 import { mensajeDeError } from '../../api/client';
-import { colores, espacio, fuentes, sombra } from '../../constants/tema';
+import { colores, espacio, estilosDinamicos, fuentes, sombra } from '../../constants/tema';
 
 export default function LoginScreen({ navigation }) {
   const { login } = useAuth();
@@ -69,7 +69,7 @@ export default function LoginScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   blob1: { position: 'absolute', top: -80, left: -90 },
   blob2: { position: 'absolute', bottom: -60, right: -80 },
   anillo: { position: 'absolute', top: 70, right: 24 },
@@ -78,5 +78,5 @@ const styles = StyleSheet.create({
   tituloFila: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: espacio.s },
   nombre: { fontFamily: fuentes.titulo, fontSize: 40, color: colores.tinta },
   lema: { fontFamily: fuentes.textoMedio, color: colores.tintaSuave, marginTop: espacio.xs, textAlign: 'center', fontSize: 15 },
-  formulario: { backgroundColor: colores.blanco, borderRadius: 28, padding: espacio.l, ...sombra },
-});
+  formulario: { backgroundColor: colores.tarjeta, borderRadius: 28, padding: espacio.l, ...sombra },
+}));

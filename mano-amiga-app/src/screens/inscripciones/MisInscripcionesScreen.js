@@ -7,7 +7,7 @@ import { Aparecer, Boton, Cargando, EstadoBadge, MensajeError, Tarjeta, Vacio } 
 import { useCarga } from '../../hooks/useCarga';
 import { cancelarInscripcion, descargarCertificado, misInscripciones } from '../../api/inscripciones';
 import { mensajeDeError } from '../../api/client';
-import { colores, espacio, estilosEstado, fuentes } from '../../constants/tema';
+import { colores, espacio, estilosDinamicos, estilosEstado, fuentes } from '../../constants/tema';
 import { diaMes, rangoFechas } from '../../utils/formato';
 
 export default function MisInscripcionesScreen({ navigation }) {
@@ -130,7 +130,7 @@ export default function MisInscripcionesScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   contenedor: { flex: 1, backgroundColor: colores.crema },
   lista: { paddingBottom: espacio.xl, flexGrow: 1 },
   relleno: { paddingHorizontal: espacio.l },
@@ -143,4 +143,4 @@ const styles = StyleSheet.create({
   linea: { fontFamily: fuentes.texto, color: colores.tintaSuave, fontSize: 13, marginTop: 2 },
   nota: { fontFamily: fuentes.textoMedio, color: colores.tintaSuave, marginBottom: espacio.s },
   acciones: { marginBottom: 2 },
-});
+}));

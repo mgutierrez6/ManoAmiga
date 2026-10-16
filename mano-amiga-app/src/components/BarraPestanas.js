@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { colores, espacio, fuentes, sombra } from '../constants/tema';
+import { colores, espacio, estilosDinamicos, fuentes, sombra } from '../constants/tema';
 
 // Color de la "burbuja" de cada pestaña activa (en orden).
 const TONOS = [colores.coral, colores.sol, colores.menta, colores.lila, colores.oceano];
@@ -51,7 +51,7 @@ function Pestana({ activa, emoji, etiqueta, tono, onPress }) {
       <Animated.View style={[styles.burbuja, { backgroundColor: fondo }]}>
         <Animated.Text style={[styles.emoji, { transform: [{ scale: escala }] }]}>{emoji}</Animated.Text>
         {activa ? (
-          <Text numberOfLines={1} style={[styles.etiqueta, { color: textoOscuro ? colores.tinta : colores.blanco }]}>
+          <Text numberOfLines={1} style={[styles.etiqueta, { color: textoOscuro ? colores.tintaFija : colores.blanco }]}>
             {etiqueta}
           </Text>
         ) : null}
@@ -60,11 +60,11 @@ function Pestana({ activa, emoji, etiqueta, tono, onPress }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   contenedor: { backgroundColor: colores.crema, paddingHorizontal: espacio.m, paddingTop: espacio.s },
   barra: {
     flexDirection: 'row',
-    backgroundColor: colores.blanco,
+    backgroundColor: colores.tarjeta,
     borderRadius: 999,
     padding: 6,
     ...sombra,
@@ -75,4 +75,4 @@ const styles = StyleSheet.create({
   burbuja: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 999, paddingVertical: 10, paddingHorizontal: 12, alignSelf: 'stretch' },
   emoji: { fontSize: 20 },
   etiqueta: { fontFamily: fuentes.negrita, fontSize: 13, marginLeft: 6, flexShrink: 1 },
-});
+}));

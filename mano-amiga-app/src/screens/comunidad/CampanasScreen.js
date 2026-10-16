@@ -6,7 +6,7 @@ import { Blob, Destello } from '../../components/Decoraciones';
 import { useCarga } from '../../hooks/useCarga';
 import { useAuth } from '../../hooks/useAuth';
 import { listarCampanas } from '../../api/comunidad';
-import { colores, espacio, familiaPara, fuentes } from '../../constants/tema';
+import { colores, espacio, estilosDinamicos, familiaPara, fuentes } from '../../constants/tema';
 import { rangoFechas } from '../../utils/formato';
 
 export default function CampanasScreen({ navigation }) {
@@ -74,7 +74,7 @@ export default function CampanasScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   contenedor: { flex: 1, backgroundColor: colores.crema },
   lista: { paddingBottom: espacio.xl, flexGrow: 1 },
   relleno: { paddingHorizontal: espacio.l, paddingTop: espacio.s },
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
   puntoEmoji: { fontSize: 18 },
   puntoNombre: { fontFamily: fuentes.negrita, color: colores.tinta },
   verMas: { fontFamily: fuentes.negrita, marginTop: espacio.m, textAlign: 'right' },
-});
+}));

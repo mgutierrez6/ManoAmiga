@@ -8,7 +8,7 @@ import { cancelarActividad, obtenerActividad } from '../../api/actividades';
 import { cambiarEstadoInscripcion, inscriptosDeActividad } from '../../api/inscripciones';
 import { asistenciaManual, asistenciasDeActividad, validarAsistencia } from '../../api/asistencias';
 import { mensajeDeError } from '../../api/client';
-import { colores, espacio, familiaPara, fuentes } from '../../constants/tema';
+import { colores, espacio, estilosDinamicos, familiaPara, fuentes } from '../../constants/tema';
 import { fechaHora, rangoFechas } from '../../utils/formato';
 
 /**
@@ -155,7 +155,7 @@ function Contador({ numero, texto, color }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   contenedor: { flex: 1, backgroundColor: colores.crema },
   contenido: { padding: espacio.l, paddingBottom: espacio.xxl },
   portada: { borderRadius: 28, padding: espacio.l, overflow: 'hidden', marginBottom: espacio.m, minHeight: 150, justifyContent: 'flex-end' },
@@ -172,4 +172,4 @@ const styles = StyleSheet.create({
   nombre: { fontFamily: fuentes.tituloMedio, fontSize: 16, color: colores.tinta },
   asistencia: { backgroundColor: colores.crema, borderRadius: 12, padding: 10, marginBottom: espacio.s },
   asistenciaTexto: { fontFamily: fuentes.textoMedio, color: colores.tinta },
-});
+}));

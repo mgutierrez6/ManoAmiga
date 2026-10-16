@@ -7,7 +7,7 @@ import { useCarga } from '../../hooks/useCarga';
 import { useAuth } from '../../hooks/useAuth';
 import { listarActividades, listarEtiquetas } from '../../api/actividades';
 import { mensajeDeError } from '../../api/client';
-import { colores, emojiEtiqueta, espacio, fuentes } from '../../constants/tema';
+import { colores, emojiEtiqueta, espacio, estilosDinamicos, fuentes } from '../../constants/tema';
 import { saludo } from '../../utils/formato';
 
 /**
@@ -81,7 +81,7 @@ export default function ActividadesScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   contenedor: { flex: 1, backgroundColor: colores.crema },
   lista: { paddingBottom: espacio.xl, flexGrow: 1 },
   filtros: { flexGrow: 0, marginTop: espacio.m },
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     fontFamily: fuentes.negrita,
     marginLeft: 8,
     backgroundColor: colores.sol,
-    color: colores.tinta,
+    color: colores.tintaFija,
     paddingHorizontal: 10,
     paddingVertical: 2,
     borderRadius: 999,
@@ -100,4 +100,4 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   relleno: { paddingHorizontal: espacio.l },
-});
+}));

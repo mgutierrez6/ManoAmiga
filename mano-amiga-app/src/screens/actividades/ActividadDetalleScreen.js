@@ -9,7 +9,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { obtenerActividad } from '../../api/actividades';
 import { inscribirme } from '../../api/inscripciones';
 import { mensajeDeError } from '../../api/client';
-import { colores, emojiEtiqueta, espacio, familiaPara, fuentes } from '../../constants/tema';
+import { colores, emojiEtiqueta, espacio, estilosDinamicos, familiaPara, fuentes } from '../../constants/tema';
 import { rangoFechas } from '../../utils/formato';
 
 export default function ActividadDetalleScreen({ route, navigation }) {
@@ -101,7 +101,7 @@ export default function ActividadDetalleScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   portada: { borderRadius: 30, padding: espacio.l, paddingTop: espacio.xl, overflow: 'hidden', marginBottom: espacio.m, minHeight: 190, justifyContent: 'flex-end' },
   portadaEmoji: { fontSize: 52, marginBottom: espacio.s },
   titulo: { fontFamily: fuentes.titulo, fontSize: 28, lineHeight: 32 },
@@ -113,4 +113,4 @@ const styles = StyleSheet.create({
   seccion: { fontFamily: fuentes.tituloMedio, fontSize: 18, color: colores.tinta, marginBottom: 6 },
   descripcion: { fontFamily: fuentes.texto, fontSize: 15, lineHeight: 23, color: colores.tinta, marginBottom: espacio.m },
   etiquetas: { flexDirection: 'row', flexWrap: 'wrap' },
-});
+}));

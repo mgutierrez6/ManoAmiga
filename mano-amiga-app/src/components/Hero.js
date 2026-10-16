@@ -2,13 +2,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FigurasEncabezado, Flotante } from './Decoraciones';
-import { colores, espacio, fuentes } from '../constants/tema';
+import { colores, espacio, estilosDinamicos, fuentes } from '../constants/tema';
 
 export const DEGRADES = {
   coral: { colores: ['#EF476F', '#FF8A5B'], texto: colores.blanco },
   oceano: { colores: ['#118AB2', '#06D6A0'], texto: colores.blanco },
   lila: { colores: ['#9B5DE5', '#EF476F'], texto: colores.blanco },
-  sol: { colores: ['#FFB703', '#FFD166'], texto: colores.tinta },
+  sol: { colores: ['#FFB703', '#FFD166'], texto: colores.tintaFija },
   menta: { colores: ['#06D6A0', '#118AB2'], texto: colores.blanco },
 };
 
@@ -45,7 +45,7 @@ export default function Hero({ titulo, subtitulo, emoji, tema = 'coral', figuras
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   hero: {
     paddingHorizontal: espacio.l,
     paddingBottom: espacio.xl,
@@ -68,4 +68,4 @@ const styles = StyleSheet.create({
   },
   stickerEmoji: { fontSize: 34 },
   extra: { marginTop: espacio.l },
-});
+}));

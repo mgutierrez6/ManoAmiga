@@ -1,4 +1,5 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Aparecer, Avatar, BarraProgreso, Boton, Cargando, MensajeError, Subtitulo, Tarjeta, TextoSuave } from '../../components/ui';
@@ -6,8 +7,10 @@ import { FigurasEncabezado, Flotante } from '../../components/Decoraciones';
 import { IlustracionMedalla } from '../../components/Ilustraciones';
 import { useCarga } from '../../hooks/useCarga';
 import { useAuth } from '../../hooks/useAuth';
-import { misHoras, obtenerPerfil } from '../../api/usuarios';
-import { colores, espacio, fuentes } from '../../constants/tema';
+import { useTema } from '../../hooks/useTema';
+import { actualizarPerfil, misHoras, obtenerPerfil } from '../../api/usuarios';
+import { mensajeDeError } from '../../api/client';
+import { colores, espacio, estilosDinamicos, fuentes } from '../../constants/tema';
 
 const ROLES = {
   voluntario: { texto: 'Voluntario/a', emoji: '🙋' },
@@ -15,18 +18,41 @@ const ROLES = {
   admin: { texto: 'Administrador/a', emoji: '🛠' },
 };
 
+const TEMAS = [
+  { valor: 'sistema', texto: 'Automático', emoji: '📱' },
+  { valor: 'claro', texto: 'Claro', emoji: '☀️' },
+  { valor: 'oscuro', texto: 'Oscuro', emoji: '🌙' },
+];
+
 /**
- * Perfil básico (Sprint 1). En el Sprint 2 (R8) se agregan: editar datos de contacto,
- * cambiar contraseña, modo oscuro e historial de inicios de sesión.
+ * Perfil (R8 / R16): datos de contacto, tema, contraseña, historial de accesos y horas judiciales.
+ * Todo lo que se muestra es del propio usuario: la API usa el id del token, nunca uno de la URL (RS2).
  */
-export default function PerfilScreen() {
-  const { logout } = useAuth();
+export default function PerfilScreen({ navigation }) {
+  const { logout, actualizarUsuario } = useAuth();
+  const { preferencia, setPreferenciaLocal, limpiarPreferenciaLocal } = useTema();
   const insets = useSafeAreaInsets();
+  const [errorTema, setErrorTema] = useState(null);
   const { datos, cargando, error, recargar } = useCarga(async () => {
     const perfil = await obtenerPerfil();
     const horas = perfil.esJudicial ? await misHoras() : null;
     return { perfil, horas };
   }, []);
+
+  // El tema se aplica al instante y después se guarda en el servidor (queda en el perfil).
+  const elegirTema = async (tema) => {
+    if (tema === preferencia) return;
+    setErrorTema(null);
+    setPreferenciaLocal(tema);
+    try {
+      const p = await actualizarPerfil({ preferencias: { tema } });
+      actualizarUsuario({ preferencias: p.preferencias });
+      limpiarPreferenciaLocal();
+    } catch (e) {
+      limpiarPreferenciaLocal(); // vuelve al tema que estaba guardado
+      setErrorTema(mensajeDeError(e));
+    }
+  };
 
   if (cargando && !datos) return <Cargando />;
   const p = datos?.perfil;
@@ -63,6 +89,7 @@ export default function PerfilScreen() {
               <Tarjeta>
                 <Fila emoji="✉️" etiqueta="Email" valor={p.email} />
                 <Fila emoji="📱" etiqueta="Teléfono" valor={p.telefono || 'Sin teléfono'} />
+                <Boton titulo="Editar mis datos" icono="✏️" variante="borde" chico onPress={() => navigation.navigate('EditarPerfil', { perfil: p })} estilo={{ marginTop: espacio.s }} />
               </Tarjeta>
             </Aparecer>
 
@@ -76,7 +103,9 @@ export default function PerfilScreen() {
                       <Text style={styles.horasGrande}>
                         {datos.horas.horasCumplidas} <Text style={styles.horasDe}>de {datos.horas.horasAsignadas} h</Text>
                       </Text>
-                      <TextoSuave>¡Te faltan {datos.horas.horasRestantes} horas!</TextoSuave>
+                      <TextoSuave>
+                        {datos.horas.horasRestantes > 0 ? `¡Te faltan ${datos.horas.horasRestantes} horas!` : '¡Completaste tus horas! 🎉'}
+                      </TextoSuave>
                     </View>
                   </View>
                   <BarraProgreso valor={datos.horas.horasCumplidas} total={datos.horas.horasAsignadas || 1} color={colores.lila} />
@@ -86,9 +115,34 @@ export default function PerfilScreen() {
             ) : null}
 
             <Aparecer indice={2}>
-              <Tarjeta estilo={styles.proximamente}>
-                <Text style={styles.proxTitulo}>✨ Muy pronto</Text>
-                <TextoSuave>Editar tus datos, cambiar la contraseña, modo oscuro e historial de accesos.</TextoSuave>
+              <Subtitulo>Apariencia</Subtitulo>
+              <View style={styles.temas}>
+                {TEMAS.map((t) => {
+                  const activo = preferencia === t.valor;
+                  return (
+                    <Pressable
+                      key={t.valor}
+                      accessibilityRole="radio"
+                      accessibilityState={{ selected: activo }}
+                      onPress={() => elegirTema(t.valor)}
+                      style={({ pressed }) => [styles.tema, activo && styles.temaActivo, pressed && { transform: [{ scale: 0.96 }] }]}
+                    >
+                      <Text style={styles.temaEmoji}>{t.emoji}</Text>
+                      <Text style={[styles.temaTexto, activo && styles.temaTextoActivo]}>{t.texto}</Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+              <MensajeError texto={errorTema} />
+            </Aparecer>
+
+            <Aparecer indice={3}>
+              <Subtitulo>Seguridad</Subtitulo>
+              <Tarjeta onPress={() => navigation.navigate('CambiarPassword')} acento={colores.coral}>
+                <Opcion emoji="🔑" titulo="Cambiar contraseña" texto="Se cierran las sesiones en tus otros dispositivos." />
+              </Tarjeta>
+              <Tarjeta onPress={() => navigation.navigate('Accesos')} acento={colores.oceano}>
+                <Opcion emoji="🕵️" titulo="Historial de accesos" texto="Revisá cuándo y desde dónde se usó tu cuenta." />
               </Tarjeta>
             </Aparecer>
           </>
@@ -111,7 +165,20 @@ function Fila({ emoji, etiqueta, valor }) {
   );
 }
 
-const styles = StyleSheet.create({
+function Opcion({ emoji, titulo, texto }) {
+  return (
+    <View style={styles.fila}>
+      <Text style={styles.filaEmoji}>{emoji}</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.opcionTitulo}>{titulo}</Text>
+        <TextoSuave>{texto}</TextoSuave>
+      </View>
+      <Text style={styles.flecha}>›</Text>
+    </View>
+  );
+}
+
+const styles = estilosDinamicos(() => ({
   contenedor: { flex: 1, backgroundColor: colores.crema },
   contenido: { paddingBottom: espacio.xxl },
   hero: { paddingBottom: espacio.xl, borderBottomLeftRadius: 36, borderBottomRightRadius: 36, overflow: 'hidden' },
@@ -125,9 +192,15 @@ const styles = StyleSheet.create({
   filaEmoji: { fontSize: 22 },
   filaEtiqueta: { fontFamily: fuentes.negrita, fontSize: 12, color: colores.gris },
   filaValor: { fontFamily: fuentes.textoMedio, fontSize: 15, color: colores.tinta },
+  opcionTitulo: { fontFamily: fuentes.tituloMedio, fontSize: 16, color: colores.tinta },
+  flecha: { fontFamily: fuentes.titulo, fontSize: 26, color: colores.gris },
   horasCabecera: { flexDirection: 'row', alignItems: 'center', gap: espacio.m, marginBottom: espacio.m },
   horasGrande: { fontFamily: fuentes.titulo, fontSize: 30, color: colores.lila },
   horasDe: { fontFamily: fuentes.textoMedio, fontSize: 16, color: colores.tintaSuave },
-  proximamente: { backgroundColor: colores.solSuave },
-  proxTitulo: { fontFamily: fuentes.tituloMedio, fontSize: 17, color: colores.tinta, marginBottom: 4 },
-});
+  temas: { flexDirection: 'row', gap: espacio.s, marginBottom: espacio.s },
+  tema: { flex: 1, alignItems: 'center', paddingVertical: espacio.m, borderRadius: 20, backgroundColor: colores.tarjeta, borderWidth: 2, borderColor: colores.borde },
+  temaActivo: { backgroundColor: colores.lilaSuave, borderColor: colores.lila },
+  temaEmoji: { fontSize: 26, marginBottom: 4 },
+  temaTexto: { fontFamily: fuentes.textoMedio, color: colores.tintaSuave },
+  temaTextoActivo: { fontFamily: fuentes.negrita, color: colores.tinta },
+}));

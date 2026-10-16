@@ -6,7 +6,7 @@ import { Anillo, Destello, Flotante, Girando } from '../../components/Decoracion
 import { IlustracionMedalla } from '../../components/Ilustraciones';
 import { registrarAsistenciaQR } from '../../api/asistencias';
 import { mensajeDeError } from '../../api/client';
-import { colores, espacio, fuentes } from '../../constants/tema';
+import { colores, espacio, estilosDinamicos, fuentes } from '../../constants/tema';
 
 /**
  * El voluntario escanea el QR que muestra el coordinador (2.3).
@@ -100,12 +100,12 @@ export default function EscanearQRScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   contenedor: { flex: 1, backgroundColor: colores.crema, padding: espacio.l, alignItems: 'center' },
   titulo: { fontFamily: fuentes.titulo, fontSize: 22, marginBottom: espacio.l, color: colores.tinta, textAlign: 'center' },
   marcoExterior: { width: 320, height: 320, alignItems: 'center', justifyContent: 'center' },
   anillo: { position: 'absolute' },
-  camaraMarco: { width: 272, height: 272, borderRadius: 40, overflow: 'hidden', backgroundColor: colores.tinta },
+  camaraMarco: { width: 272, height: 272, borderRadius: 40, overflow: 'hidden', backgroundColor: colores.tintaFija },
   centrado: { textAlign: 'center', marginTop: espacio.l },
   centro: { flex: 1, justifyContent: 'center', alignItems: 'stretch', padding: espacio.xl, backgroundColor: colores.crema },
   grande: { fontSize: 64, textAlign: 'center', marginBottom: espacio.m },
@@ -113,4 +113,4 @@ const styles = StyleSheet.create({
   exito: { fontFamily: fuentes.titulo, fontSize: 28, color: colores.mentaOscuro, textAlign: 'center', marginBottom: espacio.s },
   texto: { fontFamily: fuentes.textoMedio, fontSize: 16, textAlign: 'center', marginBottom: espacio.m, color: colores.tinta },
   resultado: { marginTop: espacio.l, alignSelf: 'stretch' },
-});
+}));

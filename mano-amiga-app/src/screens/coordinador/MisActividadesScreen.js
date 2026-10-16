@@ -5,7 +5,7 @@ import { Boton, Cargando, MensajeError, Vacio } from '../../components/ui';
 import { useCarga } from '../../hooks/useCarga';
 import { useAuth } from '../../hooks/useAuth';
 import { listarActividades } from '../../api/actividades';
-import { colores, espacio } from '../../constants/tema';
+import { colores, espacio, estilosDinamicos } from '../../constants/tema';
 
 /** Actividades de la organización del coordinador (la API toma la organización del token). */
 export default function MisActividadesScreen({ navigation }) {
@@ -46,8 +46,8 @@ export default function MisActividadesScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   contenedor: { flex: 1, backgroundColor: colores.crema },
   lista: { paddingBottom: espacio.xl, flexGrow: 1 },
   relleno: { paddingHorizontal: espacio.l },
-});
+}));

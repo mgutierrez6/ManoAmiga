@@ -5,7 +5,7 @@ import { BarraProgreso, Cargando, MensajeError, TextoSuave } from '../../compone
 import { Anillo, Blob, Destello, Flotante, Girando } from '../../components/Decoraciones';
 import { obtenerQR } from '../../api/asistencias';
 import { mensajeDeError } from '../../api/client';
-import { colores, espacio, fuentes, sombra } from '../../constants/tema';
+import { colores, espacio, estilosDinamicos, fuentes, sombra } from '../../constants/tema';
 
 const RENOVAR_CADA_MS = 50 * 1000; // el QR vence a los 60 s: lo renovamos un poco antes
 
@@ -66,7 +66,7 @@ export default function MostrarQRScreen({ route }) {
             <Destello color={colores.menta} tamano={24} />
           </View>
           <View style={styles.qr}>
-            <QRCode value={qr} size={230} color={colores.tinta} />
+            <QRCode value={qr} size={230} color={colores.tintaFija} />
           </View>
         </View>
       ) : null}
@@ -84,7 +84,7 @@ export default function MostrarQRScreen({ route }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   contenedor: { flex: 1, backgroundColor: colores.crema, padding: espacio.l, alignItems: 'center', overflow: 'hidden' },
   titulo: { fontFamily: fuentes.titulo, fontSize: 24, textAlign: 'center', color: colores.tinta },
   marcoExterior: { width: 330, height: 330, alignItems: 'center', justifyContent: 'center', marginVertical: espacio.m },
@@ -94,4 +94,4 @@ const styles = StyleSheet.create({
   contador: { alignSelf: 'stretch', marginBottom: espacio.m },
   contadorTexto: { fontFamily: fuentes.negrita, color: colores.tinta, textAlign: 'center', marginBottom: 8 },
   centrado: { textAlign: 'center', marginTop: espacio.s },
-});
+}));

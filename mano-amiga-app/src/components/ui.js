@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Animated, Easing, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import { colores, estilosEstado, espacio, familiaPara, fuentes, radio, sombra } from '../constants/tema';
+import { colores, espacio, estilosDinamicos, estilosEstado, familiaPara, fuentes, radio, sombra } from '../constants/tema';
 import { estadoTexto } from '../utils/formato';
 import { IlustracionVacia } from './Ilustraciones';
 
@@ -24,23 +24,27 @@ export function Subtitulo({ children, estilo }) {
   return <Text style={[styles.subtitulo, estilo]}>{children}</Text>;
 }
 
-export function TextoSuave({ children, estilo }) {
-  return <Text style={[styles.textoSuave, estilo]}>{children}</Text>;
+export function TextoSuave({ children, estilo, ...props }) {
+  return (
+    <Text style={[styles.textoSuave, estilo]} {...props}>
+      {children}
+    </Text>
+  );
 }
 
 /* ------------------------------------------------------------------ */
 /* Botón "3D": tiene un borde inferior más oscuro que se hunde al tocar */
 /* ------------------------------------------------------------------ */
 
-const VARIANTES = {
+const VARIANTES = estilosDinamicos(() => ({
   primario: { fondo: colores.coral, sombra: colores.coralOscuro, texto: colores.blanco },
   secundario: { fondo: colores.oceano, sombra: colores.oceanoOscuro, texto: colores.blanco },
-  exito: { fondo: colores.menta, sombra: colores.mentaOscuro, texto: colores.tinta },
-  sol: { fondo: colores.sol, sombra: colores.solOscuro, texto: colores.tinta },
+  exito: { fondo: colores.menta, sombra: colores.mentaOscuro, texto: colores.tintaFija },
+  sol: { fondo: colores.sol, sombra: colores.solOscuro, texto: colores.tintaFija },
   lila: { fondo: colores.lila, sombra: colores.lilaOscuro, texto: colores.blanco },
   peligro: { fondo: colores.peligro, sombra: '#A3173A', texto: colores.blanco },
-  borde: { fondo: colores.blanco, sombra: colores.borde, texto: colores.tinta, borde: colores.tinta },
-};
+  borde: { fondo: colores.tarjeta, sombra: colores.borde, texto: colores.tinta, borde: colores.tinta },
+}));
 
 export function Boton({ titulo, onPress, variante = 'primario', cargando = false, deshabilitado = false, estilo, icono, chico = false }) {
   const v = VARIANTES[variante] || VARIANTES.primario;
@@ -177,7 +181,7 @@ export function Chip({ texto, activo = false, onPress, emoji, clave }) {
 }
 
 export function EstadoBadge({ estado }) {
-  const e = estilosEstado[estado] || { fondo: '#ECEFF1', texto: colores.tintaSuave, emoji: '•' };
+  const e = estilosEstado[estado] || { fondo: colores.neutroSuave, texto: colores.tintaSuave, emoji: '•' };
   return (
     <View style={[styles.badge, { backgroundColor: e.fondo }]}>
       <Text style={[styles.badgeTexto, { color: e.texto }]}>
@@ -282,7 +286,7 @@ export function Vacio({ texto, titulo = '¡Nada por acá todavía!' }) {
 
 /* ------------------------------------------------------------------ */
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   texto: { fontFamily: fuentes.texto, fontSize: 15, color: colores.tinta },
   titulo: { fontFamily: fuentes.titulo, fontSize: 26, color: colores.tinta, marginBottom: espacio.xs },
   subtitulo: { fontFamily: fuentes.tituloMedio, fontSize: 19, color: colores.tinta, marginTop: espacio.l, marginBottom: espacio.s },
@@ -302,10 +306,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: colores.borde,
     borderRadius: 16,
-    backgroundColor: colores.blanco,
+    backgroundColor: colores.tarjeta,
     paddingHorizontal: espacio.m,
   },
-  inputFoco: { borderColor: colores.coral, backgroundColor: '#FFFDFB' },
+  inputFoco: { borderColor: colores.coral, backgroundColor: colores.campoFoco },
   inputError: { borderColor: colores.peligro },
   inputMultilinea: { alignItems: 'flex-start', paddingTop: 4 },
   inputIcono: { fontSize: 18, marginRight: 8 },
@@ -326,7 +330,7 @@ const styles = StyleSheet.create({
   avatar: { alignItems: 'center', justifyContent: 'center' },
   avatarTexto: { fontFamily: fuentes.titulo },
 
-  barra: { height: 10, borderRadius: 999, backgroundColor: '#F1E8DA', overflow: 'hidden' },
+  barra: { height: 10, borderRadius: 999, backgroundColor: colores.pista, overflow: 'hidden' },
   barraRelleno: { height: '100%', borderRadius: 999 },
 
   pastilla: { flexDirection: 'row', alignSelf: 'flex-start', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 14, marginRight: 8, marginBottom: 8 },
@@ -336,7 +340,7 @@ const styles = StyleSheet.create({
   fila: { flexDirection: 'row', gap: 10 },
   punto: { width: 14, height: 14, borderRadius: 7 },
   error: { backgroundColor: colores.coralSuave, padding: espacio.m, borderRadius: 18, marginBottom: espacio.m },
-  errorTexto: { fontFamily: fuentes.textoMedio, color: '#A3173A', marginBottom: espacio.xs },
+  errorTexto: { fontFamily: fuentes.textoMedio, color: colores.coralTexto, marginBottom: espacio.xs },
   vacio: { alignItems: 'center', paddingVertical: espacio.xl, paddingHorizontal: espacio.l },
   vacioTitulo: { fontFamily: fuentes.titulo, fontSize: 20, color: colores.tinta, marginTop: espacio.m, marginBottom: espacio.xs },
-});
+}));

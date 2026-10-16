@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Aparecer, BarraProgreso, Chip, EstadoBadge, Tarjeta } from './ui';
-import { colores, emojiEtiqueta, espacio, familiaPara, fuentes } from '../constants/tema';
+import { colores, emojiEtiqueta, espacio, estilosDinamicos, familiaPara, fuentes } from '../constants/tema';
 import { diaMes, hora } from '../utils/formato';
 
 /**
@@ -71,7 +71,7 @@ export default function ActividadCard({ actividad, onPress, mostrarEstado = fals
   );
 }
 
-const styles = StyleSheet.create({
+const styles = estilosDinamicos(() => ({
   tarjeta: { padding: espacio.m },
   fila: { flexDirection: 'row' },
   calendario: { width: 58, height: 66, borderRadius: 18, alignItems: 'center', justifyContent: 'center', marginRight: espacio.m },
@@ -88,4 +88,4 @@ const styles = StyleSheet.create({
   cuposLibres: { fontFamily: fuentes.negrita, color: colores.mentaOscuro, fontSize: 13 },
   cuposTotal: { fontFamily: fuentes.textoMedio, color: colores.gris, fontSize: 12 },
   etiquetas: { flexDirection: 'row', flexWrap: 'wrap', marginTop: espacio.m },
-});
+}));
