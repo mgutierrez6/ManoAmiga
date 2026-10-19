@@ -26,12 +26,12 @@ export default function MisActividadesScreen({ navigation }) {
           <Hero
             titulo={`¡Hola, ${usuario.nombre}!`}
             subtitulo={lista.length ? `Tu organización tiene ${publicadas} ${publicadas === 1 ? 'actividad publicada' : 'actividades publicadas'}` : 'Creá la primera actividad de tu organización'}
-            emoji="🗂"
+           
             tema="oceano"
             figuras={0}
           />
           <View style={styles.relleno}>
-            <Boton titulo="Nueva actividad" icono="✨" onPress={() => navigation.navigate('ActividadForm')} estilo={{ marginTop: espacio.m }} />
+            <Boton titulo="Nueva actividad" onPress={() => navigation.navigate('ActividadForm')} estilo={{ marginTop: espacio.m }} />
             <MensajeError texto={error} onReintentar={recargar} />
           </View>
         </>

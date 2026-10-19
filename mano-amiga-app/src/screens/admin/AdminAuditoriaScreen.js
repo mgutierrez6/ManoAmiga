@@ -8,13 +8,14 @@ import { colores, espacio, estilosDinamicos, fuentes } from '../../constants/tem
 import { fechaHora } from '../../utils/formato';
 
 const FILTROS = [
-  { valor: null, texto: 'Todo', emoji: '🌈' },
-  { valor: 'denegado', texto: 'Denegados', emoji: '⛔' },
-  { valor: 'fallo', texto: 'Fallidos', emoji: '⚠️' },
-  { valor: 'ok', texto: 'Correctos', emoji: '✅' },
+  { valor: null, texto: 'Todo' },
+  { valor: 'denegado', texto: 'Denegados' },
+  { valor: 'fallo', texto: 'Fallidos' },
+  { valor: 'ok', texto: 'Correctos' },
 ];
 
-const EMOJI = { ok: '✅', fallo: '⚠️', denegado: '⛔' };
+// Color del punto según el resultado (el texto de la acción dice qué pasó).
+const COLOR_RESULTADO = { ok: 'menta', fallo: 'sol', denegado: 'coral' };
 
 /**
  * RS9 · Auditoría: permite detectar el uso indebido de credenciales (muchos "denegado" o "fallo"
@@ -32,10 +33,10 @@ export default function AdminAuditoriaScreen() {
       keyExtractor={(e) => e.id}
       ListHeaderComponent={
         <>
-          <Hero titulo="Auditoría" subtitulo="Últimos eventos de seguridad" emoji="🔎" tema="coral" figuras={1} />
+          <Hero titulo="Auditoría" subtitulo="Últimos eventos de seguridad" tema="coral" figuras={1} />
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filtros}>
             {FILTROS.map((f) => (
-              <Chip key={f.texto} texto={f.texto} emoji={f.emoji} clave={f.texto} activo={resultado === f.valor} onPress={() => setResultado(f.valor)} />
+              <Chip key={f.texto} texto={f.texto} clave={f.texto} activo={resultado === f.valor} onPress={() => setResultado(f.valor)} />
             ))}
           </ScrollView>
           <View style={styles.relleno}>
@@ -48,21 +49,21 @@ export default function AdminAuditoriaScreen() {
         <Aparecer indice={index} estilo={styles.relleno}>
           <Tarjeta acento={item.resultado === 'ok' ? colores.menta : item.resultado === 'fallo' ? colores.sol : colores.coral}>
             <View style={styles.fila}>
-              <Text style={styles.emoji}>{EMOJI[item.resultado] || '•'}</Text>
+              <View style={[styles.punto, { backgroundColor: colores[COLOR_RESULTADO[item.resultado] || 'gris'] }]} />
               <View style={{ flex: 1 }}>
                 <Text style={styles.accion}>{item.accion.replace(/_/g, ' ')}</Text>
                 <TextoSuave>{fechaHora(item.fecha)}</TextoSuave>
               </View>
             </View>
-            <TextoSuave numberOfLines={1}>👤 {item.usuario ? item.usuario.email : 'Sin usuario (anónimo)'}</TextoSuave>
+            <TextoSuave numberOfLines={1}>{item.usuario ? item.usuario.email : 'Sin usuario (anónimo)'}</TextoSuave>
             {item.recurso ? (
               <TextoSuave numberOfLines={1}>
-                📄 {item.recurso}
+                {item.recurso}
                 {item.recursoId ? ` · ${item.recursoId}` : ''}
               </TextoSuave>
             ) : null}
-            {item.detalle ? <TextoSuave numberOfLines={2}>📝 {item.detalle}</TextoSuave> : null}
-            {item.ip ? <TextoSuave>🌐 {item.ip}</TextoSuave> : null}
+            {item.detalle ? <TextoSuave numberOfLines={2}>{item.detalle}</TextoSuave> : null}
+            {item.ip ? <TextoSuave>{item.ip}</TextoSuave> : null}
           </Tarjeta>
         </Aparecer>
       )}
@@ -76,6 +77,6 @@ const styles = estilosDinamicos(() => ({
   relleno: { paddingHorizontal: espacio.l },
   filtros: { paddingHorizontal: espacio.l, paddingTop: espacio.m },
   fila: { flexDirection: 'row', alignItems: 'center', gap: espacio.m, marginBottom: 4 },
-  emoji: { fontSize: 24 },
+  punto: { width: 12, height: 12, borderRadius: 6 },
   accion: { fontFamily: fuentes.tituloMedio, fontSize: 16, color: colores.tinta, textTransform: 'capitalize' },
 }));

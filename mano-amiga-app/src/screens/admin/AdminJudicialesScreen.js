@@ -16,7 +16,7 @@ export default function AdminJudicialesScreen() {
       keyExtractor={(u) => u.id}
       ListHeaderComponent={
         <>
-          <Hero titulo="Programa judicial" subtitulo="Avance de horas comunitarias" emoji="⚖️" tema="sol" figuras={0} />
+          <Hero titulo="Programa judicial" subtitulo="Avance de horas comunitarias" tema="sol" figuras={0} />
           <View style={styles.relleno}>
             <TextoSuave estilo={{ marginVertical: espacio.m }}>Para sumar a alguien al programa, buscalo en la pestaña Usuarios.</TextoSuave>
             <MensajeError texto={error} onReintentar={recargar} />
@@ -43,7 +43,7 @@ export default function AdminJudicialesScreen() {
                 </Text>
               </View>
               <BarraProgreso valor={item.horasCumplidas} total={item.horasAsignadas || 1} color={completo ? colores.menta : colores.lila} />
-              <TextoSuave estilo={{ marginTop: 8 }}>{completo ? '🎉 Completó sus horas' : `Le faltan ${item.horasRestantes} h`}</TextoSuave>
+              <TextoSuave estilo={{ marginTop: 8 }}>{completo ? 'Completó sus horas' : `Le faltan ${item.horasRestantes} h`}</TextoSuave>
             </Tarjeta>
           </Aparecer>
         );

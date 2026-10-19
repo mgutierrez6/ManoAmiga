@@ -15,7 +15,7 @@ module.exports = {
     android: {
       package: 'uy.edu.um.manoamiga',
       adaptiveIcon: {
-        backgroundColor: '#E8F5E9',
+        backgroundColor: '#FFF8EE',
         foregroundImage: './assets/android-icon-foreground.png',
         backgroundImage: './assets/android-icon-background.png',
         monochromeImage: './assets/android-icon-monochrome.png',

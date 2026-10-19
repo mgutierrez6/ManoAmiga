@@ -6,7 +6,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MensajeError } from '../../components/ui';
 import { useTema } from '../../hooks/useTema';
 import { colores, espacio, estilosDinamicos, fuentes, sombra } from '../../constants/tema';
-import { FichaPunto, FiltrosMapa, REGION_INICIAL, colorPunto, emojiPunto, usePuntos } from './comun';
+import { FichaPunto, FiltrosMapa, REGION_INICIAL, colorPunto, usePuntos } from './comun';
+import Icono from '../../components/Icono';
 
 /**
  * Mapa de actividades y puntos de acopio (R5).
@@ -68,7 +69,7 @@ export default function MapaScreen({ navigation }) {
       </MapView>
 
       <View style={[styles.arriba, { paddingTop: insets.top + espacio.s }]} pointerEvents="box-none">
-        <Text style={styles.titulo}>🗺 Cerca tuyo</Text>
+        <Text style={styles.titulo}>Cerca tuyo</Text>
         <FiltrosMapa tipo={tipo} setTipo={setTipo} total={puntos.length} />
         <View style={styles.avisos}>
           <MensajeError texto={error} onReintentar={recargar} />
@@ -77,7 +78,7 @@ export default function MapaScreen({ navigation }) {
       </View>
 
       <Pressable accessibilityRole="button" accessibilityLabel="Centrar el mapa en mi ubicación" onPress={centrarEnMi} style={[styles.botonUbicacion, { bottom: seleccionado ? 250 : espacio.l }]}>
-        <Text style={styles.botonUbicacionTexto}>📍</Text>
+        <Icono nombre="mapa" color={colores.tinta} tamano={22} />
       </Pressable>
 
       {seleccionado ? (
@@ -89,7 +90,7 @@ export default function MapaScreen({ navigation }) {
   );
 }
 
-/** Marcador con burbuja de color + emoji. Se deja de redibujar después del primer render (rendimiento). */
+/** Marcador con burbuja de color + ícono. Se deja de redibujar después del primer render (rendimiento). */
 function Marcador({ punto, activo, onPress }) {
   const [redibujar, setRedibujar] = useState(true);
   useEffect(() => {
@@ -109,7 +110,7 @@ function Marcador({ punto, activo, onPress }) {
     >
       <View style={styles.marcador}>
         <View style={[styles.burbuja, { backgroundColor: colorPunto(punto) }, activo && styles.burbujaActiva]}>
-          <Text style={styles.burbujaEmoji}>{emojiPunto(punto)}</Text>
+          <Icono nombre={punto.tipo === 'acopio' ? 'campanas' : 'actividades'} color={colores.blanco} tamano={18} grosor={2.2} />
         </View>
         <View style={[styles.pico, { borderTopColor: colorPunto(punto) }]} />
       </View>

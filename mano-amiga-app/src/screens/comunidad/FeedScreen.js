@@ -1,6 +1,5 @@
 import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import { Aparecer, Avatar, Boton, Cargando, MensajeError, Vacio } from '../../components/ui';
-import { Garabato } from '../../components/Decoraciones';
 import { useCarga } from '../../hooks/useCarga';
 import { useAuth } from '../../hooks/useAuth';
 import { listarPublicaciones } from '../../api/comunidad';
@@ -26,8 +25,7 @@ export default function FeedScreen({ route, navigation }) {
       ListHeaderComponent={
         <View style={styles.encabezado}>
           <Text style={styles.encabezadoTitulo}>{titulo}</Text>
-          <Garabato color={colores.coral} ancho={110} />
-          {puedePublicar ? <Boton titulo="Publicar novedad" icono="📣" variante="lila" onPress={() => navigation.navigate('Publicar', { proyectoId, titulo })} estilo={{ marginTop: espacio.m }} /> : null}
+          {puedePublicar ? <Boton titulo="Publicar novedad" variante="lila" onPress={() => navigation.navigate('Publicar', { proyectoId, titulo })} estilo={{ marginTop: espacio.m }} /> : null}
           <MensajeError texto={error} onReintentar={recargar} />
         </View>
       }
@@ -39,7 +37,7 @@ export default function FeedScreen({ route, navigation }) {
             <View style={styles.fila}>
               <Avatar nombre={p.autor?.nombre || '?'} tamano={40} />
               <View style={[styles.globo, convocatoria && styles.globoConvocatoria]}>
-                {convocatoria ? <Text style={styles.etiquetaConv}>⚡ CONVOCATORIA EXPRESS</Text> : null}
+                {convocatoria ? <Text style={styles.etiquetaConv}>CONVOCATORIA EXPRESS</Text> : null}
                 <Text style={styles.contenido}>{p.contenido}</Text>
                 <Text style={styles.meta}>
                   {p.autor?.nombre ? `${p.autor.nombre} · ` : ''}

@@ -9,10 +9,10 @@ import { colores, espacio, estilosDinamicos, fuentes } from '../../constants/tem
 import { confirmar } from '../../utils/confirmar';
 
 const ROLES = [
-  { valor: null, texto: 'Todos', emoji: '🌈' },
-  { valor: 'voluntario', texto: 'Voluntarios', emoji: '🙋' },
-  { valor: 'coordinador', texto: 'Coordinadores', emoji: '🧭' },
-  { valor: 'admin', texto: 'Admins', emoji: '🛠' },
+  { valor: null, texto: 'Todos' },
+  { valor: 'voluntario', texto: 'Voluntarios' },
+  { valor: 'coordinador', texto: 'Coordinadores' },
+  { valor: 'admin', texto: 'Admins' },
 ];
 
 /**
@@ -36,11 +36,11 @@ export default function AdminUsuariosScreen() {
 
   const cabecera = (
     <>
-      <Hero titulo="Usuarios" subtitulo="Roles y programa judicial" emoji="👥" tema="lila" figuras={1} />
+      <Hero titulo="Usuarios" subtitulo="Roles y programa judicial" tema="lila" figuras={1} />
       <View style={styles.relleno}>
         <View style={{ marginTop: espacio.m }}>
           <Campo
-            icono="🔎"
+           
             placeholder="Buscar por nombre o email"
             value={texto}
             onChangeText={setTexto}
@@ -53,7 +53,7 @@ export default function AdminUsuariosScreen() {
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.filtros}>
         {ROLES.map((r) => (
-          <Chip key={r.texto} texto={r.texto} emoji={r.emoji} clave={r.texto} activo={rol === r.valor} onPress={() => setRol(r.valor)} />
+          <Chip key={r.texto} texto={r.texto} clave={r.texto} activo={rol === r.valor} onPress={() => setRol(r.valor)} />
         ))}
       </ScrollView>
       <View style={styles.relleno}>
@@ -90,9 +90,9 @@ export default function AdminUsuariosScreen() {
               <Text style={styles.flecha}>{abierto === item.id ? '˄' : '˅'}</Text>
             </Pressable>
             <View style={styles.pastillas}>
-              <Pastilla emoji={ROLES.find((r) => r.valor === item.rol)?.emoji} texto={item.rol} clave={item.rol} />
-              {item.organizacion ? <Pastilla emoji="🏢" texto={item.organizacion.nombre} clave="org" /> : null}
-              {item.esJudicial ? <Pastilla emoji="⚖️" texto={`Judicial · ${item.horasAsignadas} h`} clave="judicial" /> : null}
+              <Pastilla texto={item.rol} clave={item.rol} />
+              {item.organizacion ? <Pastilla texto={item.organizacion.nombre} clave="org" /> : null}
+              {item.esJudicial ? <Pastilla texto={`Judicial · ${item.horasAsignadas} h`} clave="judicial" /> : null}
             </View>
             {abierto === item.id ? <Acciones usuario={item} orgs={orgsActivas} onCambio={reemplazar} onQuitado={recargar} /> : null}
           </Tarjeta>
@@ -148,12 +148,12 @@ function Acciones({ usuario, orgs, onCambio, onQuitado }) {
   // Voluntario
   return (
     <View style={styles.acciones}>
-      <Text style={styles.accionTitulo}>⚖️ Programa judicial</Text>
+      <Text style={styles.accionTitulo}>Programa judicial</Text>
       <View style={styles.switchFila}>
         <Text style={styles.switchTexto}>{judicial ? 'Cumple horas de trabajo comunitario' : 'No es del programa judicial'}</Text>
         <Switch value={judicial} onValueChange={setJudicial} trackColor={{ true: colores.lila, false: colores.borde }} thumbColor={colores.blanco} />
       </View>
-      {judicial ? <Campo etiqueta="Horas asignadas" icono="⏱" value={horas} onChangeText={(t) => setHoras(t.replace(/[^0-9]/g, ''))} keyboardType="number-pad" maxLength={4} /> : null}
+      {judicial ? <Campo etiqueta="Horas asignadas" value={horas} onChangeText={(t) => setHoras(t.replace(/[^0-9]/g, ''))} keyboardType="number-pad" maxLength={4} /> : null}
       <Boton
         titulo="Guardar condición judicial"
         variante="lila"
@@ -168,7 +168,7 @@ function Acciones({ usuario, orgs, onCambio, onQuitado }) {
 
       {!usuario.esJudicial ? (
         <>
-          <Text style={[styles.accionTitulo, { marginTop: espacio.m }]}>🧭 Hacer coordinador/a de…</Text>
+          <Text style={[styles.accionTitulo, { marginTop: espacio.m }]}>Hacer coordinador/a de…</Text>
           {orgs.length ? (
             <View style={styles.pastillas}>
               {orgs.map((o) => (

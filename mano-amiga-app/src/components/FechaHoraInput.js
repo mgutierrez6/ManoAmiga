@@ -3,6 +3,7 @@ import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import DateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
 import { colores, espacio, estilosDinamicos, fuentes } from '../constants/tema';
 import { fechaHora } from '../utils/formato';
+import Icono from './Icono';
 
 /**
  * Selector de fecha y hora. En Android abre primero la fecha y después la hora (API imperativa);
@@ -37,7 +38,7 @@ export default function FechaHoraInput({ etiqueta, valor, onChange }) {
     <View style={styles.campo}>
       <Text style={styles.etiqueta}>{etiqueta}</Text>
       <Pressable onPress={abrir} style={({ pressed }) => [styles.input, pressed && { borderColor: colores.coral }]}>
-        <Text style={styles.icono}>📅</Text>
+        <Icono nombre="actividades" color={colores.tintaSuave} tamano={20} />
         <Text style={styles.valor}>{fechaHora(valor)}</Text>
       </Pressable>
       {Platform.OS === 'ios' && mostrarIOS ? (

@@ -1,18 +1,3 @@
-// Identidad visual de Mano Amiga: alegre, cálida y colorida.
-// Paleta inspirada en combinaciones tipo colorhunt (coral · sol · menta · océano) + un lila de acento.
-
-// ---------------------------------------------------------------------------------------------
-// Tema claro / oscuro (R16 · preferencias del perfil)
-//
-// "colores" es UN objeto compartido: al cambiar de tema se le copian los valores de la otra paleta
-// (aplicarPaleta) y la app se vuelve a dibujar (ver context/TemaContext.js). Los estilos se arman con
-// estilosDinamicos(() => ({ ... })), que los recalcula solo cuando cambió el tema.
-//
-// Convenciones:
-//  - blanco / tintaFija: NO cambian. Son para texto e íconos SOBRE colores de marca (botones, héroes, QR).
-//  - tarjeta / crema / tinta / tintaSuave / borde / *Suave: SÍ cambian (superficies y texto normal).
-// ---------------------------------------------------------------------------------------------
-
 const marca = {
   coral: '#EF476F',
   coralOscuro: '#C9304F',
@@ -42,11 +27,12 @@ export const paletas = {
     oceanoSuave: '#D8EEF6',
     lilaSuave: '#EEE3FB',
     neutroSuave: '#ECEFF1',
-    coralTexto: '#A3173A',
-    solTexto: '#8A5A00',
-    mentaTexto: '#03694F',
-    oceanoTexto: '#0B5D78',
-    lilaTexto: '#5B2A99',
+    // Texto sobre los tintes suaves: siempre colores de la paleta (los "Oscuro" o la tinta).
+    coralTexto: marca.coralOscuro,
+    solTexto: marca.tintaFija,
+    mentaTexto: marca.tintaFija,
+    oceanoTexto: marca.oceanoOscuro,
+    lilaTexto: marca.lilaOscuro,
     tinta: '#073B4C', // texto principal
     tintaSuave: '#4A6572', // texto secundario
     crema: '#FFF8EE', // fondo general
@@ -155,48 +141,35 @@ export function familiaPara(clave) {
   return familias[h % familias.length];
 }
 
-// Estados: color + emoji para que se entiendan de un vistazo (no solo por color).
+// Estados: tinte de color + texto (el texto siempre dice el estado, no depende solo del color).
 export const estilosEstado = estilosDinamicos(() => ({
-  pendiente: { fondo: colores.solSuave, texto: colores.solTexto, emoji: '⏳' },
-  aceptada: { fondo: colores.mentaSuave, texto: colores.mentaTexto, emoji: '✅' },
-  rechazada: { fondo: colores.coralSuave, texto: colores.coralTexto, emoji: '✖️' },
-  cancelada: { fondo: colores.neutroSuave, texto: colores.tintaSuave, emoji: '🚫' },
-  abierta: { fondo: colores.oceanoSuave, texto: colores.oceanoTexto, emoji: '🕒' },
-  validada: { fondo: colores.mentaSuave, texto: colores.mentaTexto, emoji: '🏅' },
-  publicada: { fondo: colores.mentaSuave, texto: colores.mentaTexto, emoji: '🟢' },
-  finalizada: { fondo: colores.neutroSuave, texto: colores.tintaSuave, emoji: '🏁' },
-  activa: { fondo: colores.mentaSuave, texto: colores.mentaTexto, emoji: '🟢' },
+  pendiente: { fondo: colores.solSuave, texto: colores.solTexto },
+  aceptada: { fondo: colores.mentaSuave, texto: colores.mentaTexto },
+  rechazada: { fondo: colores.coralSuave, texto: colores.coralTexto },
+  cancelada: { fondo: colores.neutroSuave, texto: colores.tintaSuave },
+  abierta: { fondo: colores.oceanoSuave, texto: colores.oceanoTexto },
+  validada: { fondo: colores.mentaSuave, texto: colores.mentaTexto },
+  publicada: { fondo: colores.mentaSuave, texto: colores.mentaTexto },
+  finalizada: { fondo: colores.neutroSuave, texto: colores.tintaSuave },
+  activa: { fondo: colores.mentaSuave, texto: colores.mentaTexto },
   // Sprint 2
-  admin: { fondo: colores.lilaSuave, texto: colores.lilaTexto, emoji: '🛠' },
-  inactiva: { fondo: colores.neutroSuave, texto: colores.tintaSuave, emoji: '⏸' },
+  admin: { fondo: colores.lilaSuave, texto: colores.lilaTexto },
+  inactiva: { fondo: colores.neutroSuave, texto: colores.tintaSuave },
 }));
 
 // Compatibilidad con código anterior
 export const coloresEstado = estilosDinamicos(() => Object.fromEntries(Object.entries(estilosEstado).map(([k, v]) => [k, v.texto])));
 
-// Emoji por etiqueta (si no está, se usa 🤝).
-const EMOJI_ETIQUETA = {
-  'ollas populares': '🍲',
-  medioambiente: '🌱',
-  urgente: '⚡',
-  donaciones: '🎁',
-  'adultos mayores': '👵',
-  'apto programa judicial': '⚖️',
-  'apoyo escolar': '📚',
-  'contacto con menores': '🧸',
-  'hogares de niños': '🏠',
-  oratorios: '⛪',
-};
-
-export function emojiEtiqueta(nombre) {
-  return EMOJI_ETIQUETA[String(nombre || '').toLowerCase()] || '🤝';
+// Antes cada etiqueta tenía un emoji; el diseño ya no usa emojis. Se mantiene la función para no romper llamadas.
+export function emojiEtiqueta() {
+  return '';
 }
 
 // Sombra suave "de papel" para tarjetas.
 export const sombra = {
   shadowColor: '#000000',
-  shadowOpacity: 0.08,
-  shadowRadius: 12,
-  shadowOffset: { width: 0, height: 6 },
-  elevation: 3,
+  shadowOpacity: 0.05,
+  shadowRadius: 10,
+  shadowOffset: { width: 0, height: 3 },
+  elevation: 1,
 };

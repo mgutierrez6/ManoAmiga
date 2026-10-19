@@ -32,7 +32,7 @@ export default function AdminOrganizacionesScreen() {
       setNombre('');
       setContacto('');
       setOsla(false);
-      setMensaje(`✅ "${org.nombre}" quedó dada de alta.`);
+      setMensaje(`"${org.nombre}" quedó dada de alta.`);
       recargar();
     } catch (e) {
       setErrorForm(mensajeDeError(e));
@@ -60,18 +60,18 @@ export default function AdminOrganizacionesScreen() {
 
   const cabecera = (
     <>
-      <Hero titulo="Organizaciones" subtitulo="Altas, bajas y convenios" emoji="🏢" tema="oceano" figuras={2} />
+      <Hero titulo="Organizaciones" subtitulo="Altas, bajas y convenios" tema="oceano" figuras={2} />
       <View style={styles.relleno}>
         <Subtitulo>Nueva organización</Subtitulo>
         <Tarjeta acento={colores.oceano}>
-          <Campo etiqueta="Nombre" icono="🏷" value={nombre} onChangeText={setNombre} maxLength={100} placeholder="Ej.: Fundación Techo" />
-          <Campo etiqueta="Contacto (opcional)" icono="☎️" value={contacto} onChangeText={setContacto} maxLength={120} placeholder="Email o teléfono institucional" />
+          <Campo etiqueta="Nombre" value={nombre} onChangeText={setNombre} maxLength={100} placeholder="Ej.: Fundación Techo" />
+          <Campo etiqueta="Contacto (opcional)" value={contacto} onChangeText={setContacto} maxLength={120} placeholder="Email o teléfono institucional" />
           <View style={styles.switchFila}>
-            <Text style={styles.switchTexto}>⚖️ Convenio con OSLA (programa judicial)</Text>
+            <Text style={styles.switchTexto}>Convenio con OSLA (programa judicial)</Text>
             <Switch value={osla} onValueChange={setOsla} trackColor={{ true: colores.menta, false: colores.borde }} thumbColor={colores.blanco} />
           </View>
           <MensajeError texto={errorForm} />
-          <Boton titulo="Dar de alta" icono="➕" variante="secundario" onPress={crear} cargando={creando} />
+          <Boton titulo="Dar de alta" variante="secundario" onPress={crear} cargando={creando} />
         </Tarjeta>
         {mensaje ? <TextoSuave estilo={styles.mensaje}>{mensaje}</TextoSuave> : null}
         <MensajeError texto={error || errorAccion} onReintentar={error ? recargar : undefined} />
@@ -97,10 +97,10 @@ export default function AdminOrganizacionesScreen() {
               </Text>
               <EstadoBadge estado={item.activa ? 'activa' : 'inactiva'} />
             </View>
-            {item.contacto ? <TextoSuave>☎️ {item.contacto}</TextoSuave> : null}
+            {item.contacto ? <TextoSuave>{item.contacto}</TextoSuave> : null}
             <View style={styles.pastillas}>
-              <Pastilla emoji="🧭" texto={`${item.coordinadores} coordinador/es`} clave="coord" />
-              {item.convenioOSLA ? <Pastilla emoji="⚖️" texto="Convenio OSLA" clave="osla" /> : null}
+              <Pastilla texto={`${item.coordinadores} coordinador/es`} clave="coord" />
+              {item.convenioOSLA ? <Pastilla texto="Convenio OSLA" clave="osla" /> : null}
             </View>
             {item.activa ? <Boton titulo="Dar de baja" variante="peligro" chico onPress={() => darDeBaja(item)} /> : null}
           </Tarjeta>

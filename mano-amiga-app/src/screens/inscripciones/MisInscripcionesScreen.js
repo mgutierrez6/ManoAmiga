@@ -76,7 +76,7 @@ export default function MisInscripcionesScreen({ navigation }) {
           <Hero
             titulo="Mis inscripciones"
             subtitulo={lista.length ? `Estás en ${lista.length} ${lista.length === 1 ? 'actividad' : 'actividades'} · ${aceptadas} confirmadas` : 'Acá vas a ver tus actividades'}
-            emoji="📋"
+           
             tema="menta"
             figuras={1}
           />
@@ -106,17 +106,17 @@ export default function MisInscripcionesScreen({ navigation }) {
                 </View>
               </View>
 
-              {ins.estado === 'pendiente' ? <Text style={styles.nota}>⏳ Esperando que el coordinador confirme tu lugar.</Text> : null}
+              {ins.estado === 'pendiente' ? <Text style={styles.nota}>Esperando que el coordinador confirme tu lugar.</Text> : null}
 
               {ins.estado === 'aceptada' ? (
                 <View style={styles.acciones}>
                   <Boton
                     titulo="Marcar asistencia"
-                    icono="📷"
+                   
                     variante="exito"
                     onPress={() => navigation.navigate('EscanearQR', { actividadId: ins.actividadId, titulo: ins.actividad.titulo })}
                   />
-                  <Boton titulo="Mi certificado" icono="🏅" variante="sol" onPress={() => certificado(ins)} cargando={ocupado === ins.id} />
+                  <Boton titulo="Mi certificado" variante="sol" onPress={() => certificado(ins)} cargando={ocupado === ins.id} />
                 </View>
               ) : null}
               {['pendiente', 'aceptada'].includes(ins.estado) ? (

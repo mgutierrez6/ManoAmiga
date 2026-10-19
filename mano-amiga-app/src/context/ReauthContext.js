@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Text, View } from 'react-native';
 import { Boton, Campo, TextoSuave } from '../components/ui';
+import { LogoMarca } from '../components/Logo';
 import { api, mensajeDeError, onSolicitarReauth } from '../api/client';
 import { colores, espacio, estilosDinamicos, fuentes, sombra } from '../constants/tema';
 
@@ -60,12 +61,11 @@ export function ReauthProvider({ children }) {
       <Modal visible={visible} transparent animationType="fade" onRequestClose={cancelar}>
         <KeyboardAvoidingView style={styles.fondo} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
           <View style={styles.caja}>
-            <Text style={styles.emoji}>🔐</Text>
+            <View style={styles.marca}><LogoMarca tamano={44} /></View>
             <Text style={styles.titulo}>Confirmá que sos vos</Text>
             <TextoSuave estilo={styles.centro}>Esta acción de administración necesita tu contraseña. Vale por 5 minutos.</TextoSuave>
             <Campo
               etiqueta="Contraseña"
-              icono="🔑"
               value={password}
               onChangeText={setPassword}
               secureTextEntry
@@ -86,7 +86,7 @@ export function ReauthProvider({ children }) {
 const styles = estilosDinamicos(() => ({
   fondo: { flex: 1, backgroundColor: 'rgba(7,59,76,0.55)', justifyContent: 'center', padding: espacio.l },
   caja: { backgroundColor: colores.tarjeta, borderRadius: 28, padding: espacio.l, ...sombra },
-  emoji: { fontSize: 40, textAlign: 'center' },
+  marca: { alignItems: 'center', marginBottom: 4 },
   titulo: { fontFamily: fuentes.titulo, fontSize: 22, color: colores.tinta, textAlign: 'center', marginVertical: espacio.s },
   centro: { textAlign: 'center', marginBottom: espacio.m },
 }));

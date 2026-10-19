@@ -18,7 +18,7 @@ export default function MapaScreen({ navigation }) {
       keyExtractor={(p) => `${p.tipo}-${p.id}`}
       ListHeaderComponent={
         <>
-          <Hero titulo="Mapa" subtitulo="Actividades y puntos de acopio" emoji="🗺" tema="menta" figuras={1} />
+          <Hero titulo="Mapa" subtitulo="Actividades y puntos de acopio" tema="menta" figuras={1} />
           <View style={{ marginTop: espacio.m }}>
             <FiltrosMapa tipo={tipo} setTipo={setTipo} total={puntos.length} />
           </View>

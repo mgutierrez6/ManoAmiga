@@ -48,7 +48,7 @@ export default function CambiarPasswordScreen({ navigation }) {
     return (
       <Pantalla>
         <Tarjeta acento={colores.menta}>
-          <TextoSuave>✅ Listo, tu contraseña se cambió. Cerramos la sesión en tus otros dispositivos por seguridad.</TextoSuave>
+          <TextoSuave>Listo, tu contraseña se cambió. Cerramos la sesión en tus otros dispositivos por seguridad.</TextoSuave>
         </Tarjeta>
         <Boton titulo="Volver al perfil" onPress={() => navigation.goBack()} />
       </Pantalla>
@@ -57,12 +57,12 @@ export default function CambiarPasswordScreen({ navigation }) {
 
   return (
     <Pantalla>
-      <Campo etiqueta="Contraseña actual" icono="🔒" value={actual} onChangeText={setActual} secureTextEntry autoCapitalize="none" error={errores.actual} />
-      <Campo etiqueta="Nueva contraseña" icono="🔑" value={nueva} onChangeText={setNueva} secureTextEntry autoCapitalize="none" error={errores.nueva} maxLength={64} />
-      <Campo etiqueta="Repetí la nueva" icono="🔑" value={repetir} onChangeText={setRepetir} secureTextEntry autoCapitalize="none" error={errores.repetir} maxLength={64} />
+      <Campo etiqueta="Contraseña actual" value={actual} onChangeText={setActual} secureTextEntry autoCapitalize="none" error={errores.actual} />
+      <Campo etiqueta="Nueva contraseña" value={nueva} onChangeText={setNueva} secureTextEntry autoCapitalize="none" error={errores.nueva} maxLength={64} />
+      <Campo etiqueta="Repetí la nueva" value={repetir} onChangeText={setRepetir} secureTextEntry autoCapitalize="none" error={errores.repetir} maxLength={64} />
       <TextoSuave estilo={{ marginBottom: 12 }}>Al cambiarla se cierran tus sesiones en otros dispositivos.</TextoSuave>
       <MensajeError texto={error} />
-      <Boton titulo="Cambiar contraseña" icono="🔐" onPress={guardar} cargando={guardando} />
+      <Boton titulo="Cambiar contraseña" onPress={guardar} cargando={guardando} />
     </Pantalla>
   );
 }

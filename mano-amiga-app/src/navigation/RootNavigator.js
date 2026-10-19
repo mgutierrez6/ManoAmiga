@@ -68,11 +68,11 @@ function AuthStack() {
 function VoluntarioTabs() {
   return (
     <Tabs.Navigator screenOptions={opcionesTabs()} tabBar={barra}>
-      <Tabs.Screen name="Actividades" component={ActividadesScreen} options={{ title: 'Actividades', tabBarEmoji: '🤝' }} />
-      <Tabs.Screen name="Mapa" component={MapaScreen} options={{ title: 'Mapa', tabBarEmoji: '🗺' }} />
-      <Tabs.Screen name="Campanas" component={CampanasScreen} options={{ title: 'Campañas', tabBarEmoji: '📦' }} />
-      <Tabs.Screen name="MisInscripciones" component={MisInscripcionesScreen} options={{ title: 'Inscripciones', tabBarEmoji: '📋' }} />
-      <Tabs.Screen name="Perfil" component={PerfilScreen} options={{ title: 'Perfil', tabBarEmoji: '👤' }} />
+      <Tabs.Screen name="Actividades" component={ActividadesScreen} options={{ title: 'Actividades', tabBarIcono: 'actividades' }} />
+      <Tabs.Screen name="Mapa" component={MapaScreen} options={{ title: 'Mapa', tabBarIcono: 'mapa' }} />
+      <Tabs.Screen name="Campanas" component={CampanasScreen} options={{ title: 'Campañas', tabBarIcono: 'campanas' }} />
+      <Tabs.Screen name="MisInscripciones" component={MisInscripcionesScreen} options={{ title: 'Inscripciones', tabBarIcono: 'inscripciones' }} />
+      <Tabs.Screen name="Perfil" component={PerfilScreen} options={{ title: 'Perfil', tabBarIcono: 'perfil' }} />
     </Tabs.Navigator>
   );
 }
@@ -81,9 +81,9 @@ function VoluntarioTabs() {
 function CoordinadorTabs() {
   return (
     <Tabs.Navigator screenOptions={opcionesTabs()} tabBar={barra}>
-      <Tabs.Screen name="MisActividades" component={MisActividadesScreen} options={{ title: 'Mis actividades', tabBarEmoji: '🗂' }} />
-      <Tabs.Screen name="Campanas" component={CampanasScreen} options={{ title: 'Campañas', tabBarEmoji: '📦' }} />
-      <Tabs.Screen name="Perfil" component={PerfilScreen} options={{ title: 'Perfil', tabBarEmoji: '👤' }} />
+      <Tabs.Screen name="MisActividades" component={MisActividadesScreen} options={{ title: 'Mis actividades', tabBarIcono: 'carpeta' }} />
+      <Tabs.Screen name="Campanas" component={CampanasScreen} options={{ title: 'Campañas', tabBarIcono: 'campanas' }} />
+      <Tabs.Screen name="Perfil" component={PerfilScreen} options={{ title: 'Perfil', tabBarIcono: 'perfil' }} />
     </Tabs.Navigator>
   );
 }
@@ -92,11 +92,11 @@ function CoordinadorTabs() {
 function AdminTabs() {
   return (
     <Tabs.Navigator screenOptions={opcionesTabs()} tabBar={barra}>
-      <Tabs.Screen name="AdminOrganizaciones" component={AdminOrganizacionesScreen} options={{ title: 'Organizaciones', tabBarEmoji: '🏢' }} />
-      <Tabs.Screen name="AdminUsuarios" component={AdminUsuariosScreen} options={{ title: 'Usuarios', tabBarEmoji: '👥' }} />
-      <Tabs.Screen name="AdminJudiciales" component={AdminJudicialesScreen} options={{ title: 'Judiciales', tabBarEmoji: '⚖️' }} />
-      <Tabs.Screen name="AdminAuditoria" component={AdminAuditoriaScreen} options={{ title: 'Auditoría', tabBarEmoji: '🔎' }} />
-      <Tabs.Screen name="Perfil" component={PerfilScreen} options={{ title: 'Perfil', tabBarEmoji: '👤' }} />
+      <Tabs.Screen name="AdminOrganizaciones" component={AdminOrganizacionesScreen} options={{ title: 'Organizaciones', tabBarIcono: 'organizaciones' }} />
+      <Tabs.Screen name="AdminUsuarios" component={AdminUsuariosScreen} options={{ title: 'Usuarios', tabBarIcono: 'usuarios' }} />
+      <Tabs.Screen name="AdminJudiciales" component={AdminJudicialesScreen} options={{ title: 'Judiciales', tabBarIcono: 'judiciales' }} />
+      <Tabs.Screen name="AdminAuditoria" component={AdminAuditoriaScreen} options={{ title: 'Auditoría', tabBarIcono: 'auditoria' }} />
+      <Tabs.Screen name="Perfil" component={PerfilScreen} options={{ title: 'Perfil', tabBarIcono: 'perfil' }} />
     </Tabs.Navigator>
   );
 }

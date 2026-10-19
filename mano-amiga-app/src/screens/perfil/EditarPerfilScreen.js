@@ -45,11 +45,11 @@ export default function EditarPerfilScreen({ route, navigation }) {
   return (
     <Pantalla>
       <TextoSuave estilo={{ marginBottom: 16 }}>Tu email es tu usuario y no se puede cambiar.</TextoSuave>
-      <Campo etiqueta="Nombre" icono="🙂" value={nombre} onChangeText={setNombre} error={errores.nombre} maxLength={60} />
-      <Campo etiqueta="Apellido" icono="🪪" value={apellido} onChangeText={setApellido} error={errores.apellido} maxLength={60} />
-      <Campo etiqueta="Teléfono" icono="📱" value={telefono} onChangeText={setTelefono} error={errores.telefono} keyboardType="phone-pad" maxLength={20} />
+      <Campo etiqueta="Nombre" value={nombre} onChangeText={setNombre} error={errores.nombre} maxLength={60} />
+      <Campo etiqueta="Apellido" value={apellido} onChangeText={setApellido} error={errores.apellido} maxLength={60} />
+      <Campo etiqueta="Teléfono" value={telefono} onChangeText={setTelefono} error={errores.telefono} keyboardType="phone-pad" maxLength={20} />
       <MensajeError texto={error} />
-      <Boton titulo="Guardar cambios" icono="💾" onPress={guardar} cargando={guardando} />
+      <Boton titulo="Guardar cambios" onPress={guardar} cargando={guardando} />
     </Pantalla>
   );
 }
